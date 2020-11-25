@@ -3,7 +3,7 @@ const dbPort = process.env.DB_PORT || '3306';
 const dbUser = process.env.DB_USER || 'root';
 const dbPassword = process.env.DB_PASSWORD || 'root';
 const dbName = process.env.DB_NAME || 'node_db';
-console.log({ dbHost });
+
 module.exports = {
     HOST: dbHost,
     PORT: dbPort,
