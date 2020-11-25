@@ -2,36 +2,35 @@ version: '3.2'
 services:
     api:
         build: ./api
+        depends_on:
+            - 'db'
         ports:
             - '8000:8080'
         networks:
-            - backend
             - database
-        # volumes:
-        #     - ./api/volumes/
         environment:
             - DB_HOST=db
             - DB_USER=smk
-            - DB_PASSWORD=12345
+            - DB_PASSWORD=123456
             - DB_NAME=testDb
             - DB_PORT=3306
-        container_name: api
+        container_name: apiApp
     db:
         build: ./db
-        container_name: db
+        container_name: dbApp
+        networks:
+            - database
         environment:
             - MYSQL_ROOT_PASSWORD=root
             - MYSQL_USER=smk
             - MYSQL_PASSWORD=123456
             - MYSQL_DATABASE=testDb
-        networks:
-            - database
     phpmyadmin:
         image: phpmyadmin/phpmyadmin:4.7
         networks:
             - database
         depends_on:
-            - db
+            - 'db'
         ports:
             - '30002:80'
         environment:
@@ -39,8 +38,7 @@ services:
             - PMA_PORT=3306
         volumes:
             - /sessions
-        container_name: phpmyadmin
+        container_name: phpmyadminApp
 
 networks:
-    backend:
     database:
